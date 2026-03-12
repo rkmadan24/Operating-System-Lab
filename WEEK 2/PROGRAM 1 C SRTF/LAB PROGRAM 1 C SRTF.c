@@ -2,13 +2,14 @@
 
 int main()
 {
-    int n,i,j;
+    int n,i,time=0,completed=0;
     int pid[10],at[10],bt[10],rt[10];
     int ct[10],tat[10],wt[10];
-    int finished[10]={0};
-    int current_time=0,completed=0,min;
+    int idx,min_rt;
     float avg_tat=0,avg_wt=0;
+
     printf("\n\tNAME : R K MADAN\tUSN : 1WA24CS225\tSECTION : 'O'\n\n");
+
     printf("Enter number of processes: ");
     scanf("%d",&n);
 
@@ -26,68 +27,38 @@ int main()
         rt[i]=bt[i];
     }
 
-// Sorting according to arrival time
-    for(i=0;i<n-1;i++)
-    {
-        for(j=i+1;j<n;j++)
-        {
-            if(at[i]>at[j])
-            {
-                int temp;
-
-                temp=at[i];
-                at[i]=at[j];
-                at[j]=temp;
-
-                temp=bt[i];
-                bt[i]=bt[j];
-                bt[j]=temp;
-
-                temp=rt[i];
-                rt[i]=rt[j];
-                rt[j]=temp;
-
-                temp=pid[i];
-                pid[i]=pid[j];
-                pid[j]=temp;
-            }
-        }
-    }
-
-//Scheduling
     while(completed<n)
     {
-        min=-1;
+        idx=-1;
+        min_rt=9999;
 
         for(i=0;i<n;i++)
         {
-            if(at[i]<=current_time && finished[i]==0)
+            if(at[i]<=time && rt[i]>0 && rt[i]<min_rt)
             {
-                if(min==-1 || rt[i]<rt[min])
-                    min=i;
+                min_rt=rt[i];
+                idx=i;
             }
         }
 
-        if(min==-1)
+        if(idx==-1)
         {
-            current_time++;
+            time++;
         }
         else
         {
-            rt[min]--;
-            current_time++;
+            rt[idx]--;
+            time++;
 
-            if(rt[min]==0)
+            if(rt[idx]==0)
             {
-                ct[min]=current_time;
-                tat[min]=ct[min]-at[min];
-                wt[min]=tat[min]-bt[min];
+                ct[idx]=time;
+                tat[idx]=ct[idx]-at[idx];
+                wt[idx]=tat[idx]-bt[idx];
 
-                finished[min]=1;
+                avg_tat+=tat[idx];
+                avg_wt+=wt[idx];
                 completed++;
-
-                avg_tat+=tat[min];
-                avg_wt+=wt[min];
             }
         }
     }
