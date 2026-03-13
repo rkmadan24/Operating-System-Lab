@@ -64,12 +64,16 @@ int main()
     printf("PID\tAT\tBT\tPR\tCT\tTAT\tWT\n");
 
     for(i=0;i<n;i++)
-        printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
-        pid[i],at[i],bt[i],pr[i],ct[i],tat[i],wt[i]);
+        {
+            printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+            pid[i],at[i],bt[i],pr[i],ct[i],tat[i],wt[i]);
+        }  
+        
 
     printf("\nAverage Turnaround Time = %.2f",avg_tat/n);
     printf("\nAverage Waiting Time = %.2f\n",avg_wt/n);
 
     return 0;
 }
+
 
